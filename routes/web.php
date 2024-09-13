@@ -24,6 +24,8 @@ Route::get('/dashboard', function () {
 
 // админ панель
 Route::get('/admin/companies', [CompanyController::class, 'index'])->name('company.index');
+Route::get('/admin/companies/create', [CompanyController::class, 'create'])->name('company.create');
+Route::post('/admin/companies/store', [CompanyController::class, 'store'])->name('company.store');
 
 Route::get('/admin/employees', [EmployeeController::class, 'index'])->name('employee.index');
 
