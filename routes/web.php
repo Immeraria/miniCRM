@@ -16,12 +16,6 @@ Route::get('/', function () {
     ]);
 });
 
-// НЕ ТРОГАТЬ!!!
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
 // админ панель
 Route::get('/admin/companies', [CompanyController::class, 'index'])->name('company.index');
 Route::get('/admin/companies/create', [CompanyController::class, 'create'])->name('company.create');
