@@ -9,7 +9,8 @@ use Inertia\Inertia;
 class CompanyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Summary of index
+     * @return mixed
      */
     public function index()
     {
@@ -23,7 +24,9 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Companies/Create', [
+            
+        ]);
     }
 
     /**
@@ -31,7 +34,16 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:30',
+            'email' => 'required|string',
+            'logo' => 'nullable|string',
+            'address' => 'required|url',
+        ]);
+
+        Company::create($request->all());
+
+        return redirect()->route('company.index')->with('Компания добавлена успешно!');
     }
 
     /**
