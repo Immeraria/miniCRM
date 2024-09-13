@@ -12,8 +12,6 @@ const errors = ref({});
 
 const submitForm = async () => {
     errors.value = {}; // Сброс ошибок перед отправкой
-
-    try {
         await axios.post(route('company.store'), {
             name: name.value,
             email: email.value,
@@ -21,17 +19,6 @@ const submitForm = async () => {
             address: address.value,
             _token: document.querySelector('input[name="_token"]').value, // CSRF токен
         });
-
-        // После успешной отправки формы (например, редирект или уведомление)
-        // window.location.href = route('company.index');  // или используйте Inertia для перехода
-    } catch (error) {
-        if (error.response && error.response.status === 422) {
-            // Устанавливаем ошибки валидации
-            errors.value = error.response.data.errors;
-        } else {
-            console.error("Произошла ошибка при отправке формы:", error);
-        }
-    }
 };
 </script>
 
