@@ -15,20 +15,29 @@ const errors = ref({});
 
 const submitForm = async () => {
     errors.value = {}; // Сброс ошибок перед отправкой
-    await axios.post(route('employee.store'), {
-        name: name.value,
-        surname: surname.value,
-        company_id: company_id.value,
-        email: email.value,
-        phone_num: phone_num.value,
-        _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
-    });
-    Swal.fire({
-        title: "Уведомление",
-        text: "Вы добавили нового сотрудника!",
-        icon: "success"
-    });
+    try {
+        const response = await axios.post(route('employee.store'), {
+            name: name.value,
+            surname: surname.value,
+            company_id: company_id.value,
+            email: email.value,
+            phone_num: phone_num.value,
+            _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
+        });
+        Swal.fire({
+            title: "Уведомление",
+            text: "Вы добавили нового сотрудника!",
+            icon: "success"
+        });
+    } catch (error) {
+        if (error.response && error.response.status === 422) {
+            errors.value = error.response.data.errors;
+        } else {
+            errors.value = { message: 'Произошла ошибка при отправке запроса' };
+        }
+    }
 };
+
 </script>
 
 <template>
@@ -48,8 +57,7 @@ const submitForm = async () => {
 
                         <form @submit.prevent="submitForm">
                             <div class="mb-4">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Имя
-                                    сотрудника*</label>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Имя сотрудника*</label>
                                 <input type="text" id="name" v-model="name" required
                                     class="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md focus:ring focus:ring-gray-300 focus:outline-none" />
                                 <span class="text-red-600">{{ errors.name ? errors.name[0] : '' }}</span>
@@ -76,8 +84,7 @@ const submitForm = async () => {
                             </div>
 
                             <div class="mb-4">
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email
-                                    сотрудника</label>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email сотрудника</label>
                                 <input type="email" id="email" v-model="email"
                                     class="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md focus:ring focus:ring-gray-300 focus:outline-none" />
                             </div>

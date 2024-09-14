@@ -23,9 +23,10 @@ class EmployeeStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:30',
-            'email' => 'required|string',
-            'logo' => 'nullable|string',
-            'address' => 'required|url',
+            'surname' => 'required|string|max:30',
+            'company_id' => 'nullable|string',
+            'email' => 'nullable|string',
+            'phone_num' => 'nullable|string',
         ];
     }
 }

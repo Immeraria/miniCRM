@@ -20,33 +20,30 @@ import axios from 'axios';
                     <table class="min-w-full bg-white border border-gray-300">
                         <thead>
                             <tr class="bg-gray-200 text-gray-700">
-                                <th class="py-2 px-4 border">Название компании</th>
+                                <th class="py-2 px-4 border">Имя</th>
+                                <th class="py-2 px-4 border">Фамилия</th>
+                                <th class="py-2 px-4 border">Компания</th>
                                 <th class="py-2 px-4 border">Почта</th>
-                                <th class="py-2 px-4 border">Логотип</th>
-                                <th class="py-2 px-4 border">Адрес</th>
-                                <th class="py-2 px-4 border" style="width: 258px;"></th>
+                                <th class="py-2 px-4 border">Телефон</th>
+                                <th class="py-2 px-4 border"></th>
                                 <!-- Пустая ячейка для кнопок -->
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr class="hover:bg-gray-100" v-for="(company, index) in companies" :key="company.id">
-                                <td class="py-2 px-4 border">{{ company.name }}</td>
-                                <td class="py-2 px-4 border">{{ company.email }}</td>
-                                <td class="py-2 px-4 border">{{ company.logo }}</td>
-                                <td class="py-2 px-4 border">{{ company.address }}</td>
-                                <td class="py-2 px-4 border" style="width: 258px;">
-                                    <button class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">
-                                        <a :href="route('company.edit', company.id)">
-                                            Редактировать
-                                        </a>    
-                                    </button>
+                            <tr class="hover:bg-gray-100" v-for="(employee, index) in companies" :key="employee.id">
+                                <td class="py-2 px-4 border">{{ employee.name }}</td>
+                                <td class="py-2 px-4 border">{{ employee.surname }}</td>
+                                <td class="py-2 px-4 border">{{ employee.company_id }}</td>
+                                <td class="py-2 px-4 border">{{ employee.email }}</td>
+                                <td class="py-2 px-4 border">{{ employee.phone_num }}</td>
+                                <td class="py-2 px-4 border">
                                     <button type="submit"
                                     class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2"
-                                    @click="deleteCompany(company.id, index)">
+                                    @click="deleteEmployee(employee.id, index)">
                                         Удалить
                                     </button>
                                 </td>
-                            </tr> -->
+                            </tr>
                             <!-- Добавьте дополнительные строки по необходимости -->
                         </tbody>
                     </table>
@@ -59,33 +56,33 @@ import axios from 'axios';
 <script>
 export default {
     props: {
-        companies: Array,
+        employee: Array,
     },
 
-    // methods: {
-    //     // удаление компании
-    //     async deleteCompany(id, index) {
-    //         Swal.fire({
-    //             title: "Подтвердите",
-    //             text: "Вы действительно хотите удалить компанию?",
-    //             icon: "warning",
-    //             showCancelButton: true,
-    //             confirmButtonColor: "#3085d6",
-    //             cancelButtonColor: "#d33",
-    //             confirmButtonText: "Да",
-    //             cancelButtonText: "Нет",
-    //         }).then(async (result) => {
-    //             if (result.isConfirmed) {
-    //                 await axios.delete(route('company.destroy', id));
-    //                 this.companies.splice(index, 1)
-    //                 Swal.fire({
-    //                     title: "Уведомление",
-    //                     text: "Вы удалили компанию",
-    //                     icon: "success"
-    //                 });
-    //             }
-    //         });
-    //     },
-    // }
+    methods: {
+        // удаление компании
+        async deleteCompany(id, index) {
+            Swal.fire({
+                title: "Подтвердите",
+                text: "Вы действительно хотите удалить компанию?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Да",
+                cancelButtonText: "Нет",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await axios.delete(route('company.destroy', id));
+                    this.companies.splice(index, 1)
+                    Swal.fire({
+                        title: "Уведомление",
+                        text: "Вы удалили компанию",
+                        icon: "success"
+                    });
+                }
+            });
+        },
+    }
 };
 </script>
