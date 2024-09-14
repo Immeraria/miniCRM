@@ -25,7 +25,7 @@ Route::prefix('admin')->group(function () {
         Route::post('store', [CompanyController::class, 'store'])->name('company.store');
         Route::delete('delete/{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
         Route::get('edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
-        Route::post('update/{id}', [CompanyController::class, 'update'])->name('company.update');
+        Route::post('update', [CompanyController::class, 'update'])->name('company.update');
     });
 
     Route::get('employees', [EmployeeController::class, 'index'])->name('employee.index');

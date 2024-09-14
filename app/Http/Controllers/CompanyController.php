@@ -54,9 +54,17 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CompanyUpdateRequest $request)
+    public function update(CompanyUpdateRequest $request): \Illuminate\Http\JsonResponse
     {
-        if (Company::updated($request->validated())) {
+        $data = $request->validated();
+
+        $company = Company::find($data['id']);
+
+        if (! $company) {
+            return response()->json('Компания не найдена', 404);
+        }
+
+        if ($company->update($data)) {
             return response()->json('Компания была успешно изменена');
         }
 
