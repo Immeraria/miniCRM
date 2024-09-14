@@ -23,7 +23,7 @@ const submitForm = async () => {
     });
     Swal.fire({
         title: "Уведомление",
-        text: "Вы добавили новую компанию!",
+        text: "Вы добавили нового сотрудника!",
         icon: "success"
     });
 };
