@@ -5,16 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyStoreRequest;
 use App\Http\Requests\CompanyUpdateRequest;
 use App\Models\Company;
-use Illuminate\Http\Request;
+use App\Services\Company\CompanyService;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CompanyController extends Controller
 {
+    public function __construct(
+        private readonly CompanyService $service
+    )
+    {
+    }
+
     /**
      * Summary of index
-     * @return mixed
+     *
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Admin/Companies/Index', [
             'companies' => Company::all(),
@@ -24,7 +32,7 @@ class CompanyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Admin/Companies/Create');
     }
@@ -32,9 +40,9 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CompanyStoreRequest $request)
+    public function store(CompanyStoreRequest $request): \Illuminate\Http\JsonResponse
     {
-        if (Company::create($request->validated())) {
+        if ($this->service->createCompany($request->validated())) {
             return response()->json('Компания была успешно добавлена');
         }
 
@@ -44,7 +52,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id): Response
     {
         return Inertia::render('Admin/Companies/Edit', [
             'company' => Company::find($id),
@@ -56,25 +64,13 @@ class CompanyController extends Controller
      */
     public function update(CompanyUpdateRequest $request): \Illuminate\Http\JsonResponse
     {
-        $data = $request->validated();
-
-        $company = Company::find($data['id']);
-
-        if (! $company) {
-            return response()->json('Компания не найдена', 404);
-        }
-
-        if ($company->update($data)) {
-            return response()->json('Компания была успешно изменена');
-        }
-
-        return response()->json('Компания не была изменена', 500);
+        return $this->service->updateCompany($request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): \Illuminate\Http\JsonResponse
+    public function destroy(int $id): \Illuminate\Http\JsonResponse
     {
         if (Company::destroy($id)) {
             return response()->json('Компания была успешно удалена');
