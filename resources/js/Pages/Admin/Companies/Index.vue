@@ -36,11 +36,13 @@ import axios from 'axios';
                                 <td class="py-2 px-4 border">{{ company.address }}</td>
                                 <td class="py-2 px-4 border" style="width: 258px;">
                                     <button class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">
-                                        Редактировать
+                                        <a :href="route('company.edit', company.id)">
+                                            Редактировать
+                                        </a>    
                                     </button>
                                     <button type="submit"
-                                        class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2"
-                                        @click="deleteCompany(company.id, index)">
+                                    class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2"
+                                    @click="deleteCompany(company.id, index)">
                                         Удалить
                                     </button>
                                 </td>
@@ -83,7 +85,7 @@ export default {
                     });
                 }
             });
-        }
+        },
     }
 };
 </script>

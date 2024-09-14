@@ -23,7 +23,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::get('create', [CompanyController::class, 'create'])->name('company.create');
         Route::post('store', [CompanyController::class, 'store'])->name('company.store');
-        Route::delete('{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
+        Route::delete('delete/{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
+        Route::get('edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::post('update/{id}', [CompanyController::class, 'update'])->name('company.update');
     });
 
     Route::get('employees', [EmployeeController::class, 'index'])->name('employee.index');
