@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeStoreRequest;
+use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,15 +26,21 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Employees/Create', [
+            'companies' => Company::all(),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EmployeeStoreRequest $request)
     {
-        //
+        if (Employee::create($request->validated())) {
+            return response()->json('Сотрудник был успешно добавлен');
+        }
+
+        return response()->json('Сотрудник не был добавлен', 500);
     }
 
     /**

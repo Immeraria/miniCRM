@@ -28,7 +28,12 @@ Route::prefix('admin')->group(function () {
         Route::post('update', [CompanyController::class, 'update'])->name('company.update');
     });
 
-    Route::get('employees', [EmployeeController::class, 'index'])->name('employee.index');
+    Route::prefix('employees')->group(function () {
+        Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
+        Route::get('create', [EmployeeController::class, 'create'])->name('employee.create');
+        Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
+    });
+    
 
 });
 
