@@ -22,8 +22,8 @@ const submitForm = async () => {
         _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
     });
     Swal.fire({
-        title: "Good job!",
-        text: "You clicked the button!",
+        title: "Уведомление",
+        text: "Вы добавили новую компанию!",
         icon: "success"
     });
 };

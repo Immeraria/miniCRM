@@ -18,10 +18,16 @@ Route::get('/', function () {
 
 // админ панель
 Route::prefix('admin')->group(function () {
-    Route::get('companies', [CompanyController::class, 'index'])->name('company.index');
-    Route::get('companies/create', [CompanyController::class, 'create'])->name('company.create');
-    Route::post('companies/store', [CompanyController::class, 'store'])->name('company.store');
+
+    Route::prefix('companies')->group(function () {
+        Route::get('/', [CompanyController::class, 'index'])->name('company.index');
+        Route::get('create', [CompanyController::class, 'create'])->name('company.create');
+        Route::post('store', [CompanyController::class, 'store'])->name('company.store');
+        Route::delete('{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
+    });
+
     Route::get('employees', [EmployeeController::class, 'index'])->name('employee.index');
+
 });
 
 Route::middleware('auth')->group(function () {
