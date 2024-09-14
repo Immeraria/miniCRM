@@ -25,9 +25,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Companies/Create', [
-            
-        ]);
+        return Inertia::render('Admin/Companies/Create');
     }
 
     /**
@@ -43,19 +41,11 @@ class CompanyController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        return Inertia::render('Admin/Companies/Edit', Company::find($id));
     }
 
     /**
