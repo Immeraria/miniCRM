@@ -20,36 +20,32 @@ const errors = ref({});
 
 const submitForm = async () => {
     errors.value = {}; // Обнулить предыдущие ошибки
-    try {
-        await axios.post(route('company.update'), {
-            name: name.value,
-            email: email.value,
-            logo: logo.value,
-            address: address.value,
-            _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
-        });
-
+    await axios.post(route('company.update'), {
+        id: props.company.id,
+        name: name.value,
+        email: email.value,
+        logo: logo.value,
+        address: address.value,
+        _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
+    }).then(response => {
         Swal.fire({
             title: "Уведомление",
             text: "Вы изменили компанию",
             icon: "success"
         });
-
-        // Перенаправление или другая логика после успешного обновления
-        window.location.href = route('company.index'); // Перенаправление в коде
-    } catch (error) {
-        // Получить ошибки валидации от сервера
-        if (error.response && error.response.data.errors) {
-            errors.value = error.response.data.errors;
-        } else {
+        // Обработка успешного ответа
+        console.log(response.data); // Вывод успешного сообщения
+    })
+        .catch(error => {
+            // Обработка ошибки
             Swal.fire({
                 title: "Ошибка",
                 text: "Произошла ошибка при обновлении компании.",
                 icon: "error"
             });
-        }
-    }
-};
+            console.error(error);
+        });
+}
 </script>
 
 <template>
