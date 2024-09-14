@@ -27,19 +27,6 @@ import { Head } from '@inertiajs/vue3';
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="hover:bg-gray-100">
-                                <td class="py-2 px-4 border">Компания 1</td>
-                                <td class="py-2 px-4 border">email1@example.com</td>
-                                <td class="py-2 px-4 border"><img src="logo1.png" alt="Логотип компании 1"
-                                        class="h-10 w-10 object-cover" /></td>
-                                <td class="py-2 px-4 border">Адрес 1</td>
-                                <td class="py-2 px-4 border" style="width: 258px;">
-                                    <button
-                                        class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">Редактировать</button>
-                                    <button
-                                        class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2">Удалить</button>
-                                </td>
-                            </tr>
                             <tr class="hover:bg-gray-100" v-for="company in companies" :key="company.id">
                                 <td class="py-2 px-4 border">{{ company.name }}</td>
                                 <td class="py-2 px-4 border">{{ company.email }}</td>
@@ -49,7 +36,7 @@ import { Head } from '@inertiajs/vue3';
                                     <button
                                         class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">Редактировать</button>
                                     <button
-                                        class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2">Удалить</button>
+                                        class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2" @click="axios.delete(company.id)">Удалить</button>
                                 </td>
                             </tr>
                             <!-- Добавьте дополнительные строки по необходимости -->

@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import Swal from 'sweetalert2'
 
 const name = ref('');
 const email = ref('');
@@ -10,15 +11,21 @@ const logo = ref('');
 const address = ref('');
 const errors = ref({});
 
+
 const submitForm = async () => {
     errors.value = {}; // Сброс ошибок перед отправкой
-        await axios.post(route('company.store'), {
-            name: name.value,
-            email: email.value,
-            logo: logo.value,
-            address: address.value,
-            _token: document.querySelector('input[name="_token"]').value, // CSRF токен
-        });
+    await axios.post(route('company.store'), {
+        name: name.value,
+        email: email.value,
+        logo: logo.value,
+        address: address.value,
+        _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
+    });
+    Swal.fire({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success"
+    });
 };
 </script>
 
