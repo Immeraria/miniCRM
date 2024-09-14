@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyStoreRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,18 +33,13 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CompanyStoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:30',
-            'email' => 'required|string',
-            'logo' => 'nullable|string',
-            'address' => 'required|url',
-        ]);
+        if (Company::create($request->validated())) {
+            return response()->json('Компания была успешно добавлена');
+        }
 
-        Company::create($request->all());
-
-        return redirect()->route('company.index')->with('Компания добавлена успешно!');
+        return response()->json('Компания была не была добавлена', 500);
     }
 
     /**
@@ -75,6 +71,6 @@ class CompanyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Company::find($id)->delete();
     }
 }

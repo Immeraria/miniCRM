@@ -1,6 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import Swal from 'sweetalert2'
+import { ref } from 'vue';
+import axios from 'axios';
 </script>
 
 <template>
@@ -27,29 +30,20 @@ import { Head } from '@inertiajs/vue3';
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="hover:bg-gray-100">
-                                <td class="py-2 px-4 border">Компания 1</td>
-                                <td class="py-2 px-4 border">email1@example.com</td>
-                                <td class="py-2 px-4 border"><img src="logo1.png" alt="Логотип компании 1"
-                                        class="h-10 w-10 object-cover" /></td>
-                                <td class="py-2 px-4 border">Адрес 1</td>
-                                <td class="py-2 px-4 border" style="width: 258px;">
-                                    <button
-                                        class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">Редактировать</button>
-                                    <button
-                                        class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2">Удалить</button>
-                                </td>
-                            </tr>
                             <tr class="hover:bg-gray-100" v-for="company in companies" :key="company.id">
                                 <td class="py-2 px-4 border">{{ company.name }}</td>
                                 <td class="py-2 px-4 border">{{ company.email }}</td>
                                 <td class="py-2 px-4 border">{{ company.logo }}</td>
                                 <td class="py-2 px-4 border">{{ company.address }}</td>
                                 <td class="py-2 px-4 border" style="width: 258px;">
-                                    <button
-                                        class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">Редактировать</button>
-                                    <button
-                                        class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2">Удалить</button>
+                                    <button class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">
+                                        Редактировать
+                                    </button>
+                                    <button type="submit"
+                                        class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 ml-2"
+                                        @click="deleteCompany(company.id)">
+                                        Удалить
+                                    </button>
                                 </td>
                             </tr>
                             <!-- Добавьте дополнительные строки по необходимости -->
@@ -66,5 +60,27 @@ export default {
     props: {
         companies: Array,
     },
+
+    // удаление компании
+    deleteCompany(id) {
+        Swal.fire({
+            title: "Подтвердите",
+            text: "Вы действительно хотите удалить компанию?",
+            icon: "warning",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Да",
+            cancelButtonText: "Нет",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Уведомление",
+                    text: "Вы удалили компанию",
+                    icon: "success"
+                });
+                axios.delete(route('company.destroy', id))
+            }
+        });
+    }
 };
 </script>
