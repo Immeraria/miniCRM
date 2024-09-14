@@ -69,8 +69,12 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): \Illuminate\Http\JsonResponse
     {
-        Company::find($id)->delete();
+        if (Company::destroy($id)) {
+            return response()->json('Компания была успешно удалена');
+        }
+
+        return response()->json('Не удалось удалить компанию', 500);
     }
 }
