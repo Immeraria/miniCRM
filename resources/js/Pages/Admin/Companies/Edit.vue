@@ -19,19 +19,36 @@ const address = ref(props.company.address || '');
 const errors = ref({});
 
 const submitForm = async () => {
-    errors.value = {}; // Сброс ошибок перед отправкой
-    await axios.post(route('company.update'), {
-        name: name.value,
-        email: email.value,
-        logo: logo.value,
-        address: address.value,
-        _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
-    });
-    Swal.fire({
-        title: "Уведомление",
-        text: "Вы изменили компанию",
-        icon: "success"
-    });
+    errors.value = {}; // Обнулить предыдущие ошибки
+    try {
+        await axios.post(route('company.update'), {
+            name: name.value,
+            email: email.value,
+            logo: logo.value,
+            address: address.value,
+            _token: document.querySelector('meta[name="csrf-token"]').value, // CSRF токен
+        });
+
+        Swal.fire({
+            title: "Уведомление",
+            text: "Вы изменили компанию",
+            icon: "success"
+        });
+
+        // Перенаправление или другая логика после успешного обновления
+        window.location.href = route('company.index'); // Перенаправление в коде
+    } catch (error) {
+        // Получить ошибки валидации от сервера
+        if (error.response && error.response.data.errors) {
+            errors.value = error.response.data.errors;
+        } else {
+            Swal.fire({
+                title: "Ошибка",
+                text: "Произошла ошибка при обновлении компании.",
+                icon: "error"
+            });
+        }
+    }
 };
 </script>
 

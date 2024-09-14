@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyStoreRequest;
+use App\Http\Requests\CompanyUpdateRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -37,7 +38,7 @@ class CompanyController extends Controller
             return response()->json('Компания была успешно добавлена');
         }
 
-        return response()->json('Компания была не была добавлена', 500);
+        return response()->json('Компания не была добавлена', 500);
     }
 
     /**
@@ -45,15 +46,21 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        return Inertia::render('Admin/Companies/Edit', Company::find($id));
+        return Inertia::render('Admin/Companies/Edit', [
+            'company' => Company::find($id),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CompanyUpdateRequest $request)
     {
-        //
+        if (Company::updated($request->validated())) {
+            return response()->json('Компания была успешно изменена');
+        }
+
+        return response()->json('Компания не была изменена', 500);
     }
 
     /**
