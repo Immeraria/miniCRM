@@ -18,23 +18,23 @@ Route::get('/', function () {
 
 // админ панель
 Route::prefix('admin')->group(function () {
-
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
         Route::get('create', [CompanyController::class, 'create'])->name('company.create');
+        Route::get('edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
         Route::post('store', [CompanyController::class, 'store'])->name('company.store');
         Route::delete('delete/{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
-        Route::get('edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
         Route::post('update', [CompanyController::class, 'update'])->name('company.update');
     });
 
     Route::prefix('employees')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
         Route::get('create', [EmployeeController::class, 'create'])->name('employee.create');
+        Route::get('edit/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
         Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
+        Route::post('update', [EmployeeController::class, 'update'])->name('employee.update');
+        Route::delete('delete/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
     });
-    
-
 });
 
 Route::middleware('auth')->group(function () {
