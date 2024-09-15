@@ -20,21 +20,21 @@ import axios from 'axios';
                     <table class="min-w-full bg-white border border-gray-300">
                         <thead>
                             <tr class="bg-gray-200 text-gray-700">
-                                <th class="py-2 px-4 border">Название компании</th>
-                                <th class="py-2 px-4 border">Почта</th>
-                                <th class="py-2 px-4 border">Логотип</th>
-                                <th class="py-2 px-4 border">Адрес</th>
+                                <th class="py-2 px-4 border" style="width: 206px;">Название компании</th>
+                                <th class="py-2 px-4 border" style="width: 317px;">Почта</th>
+                                <th class="py-2 px-4 border" style="width: 106px;">Логотип</th>
+                                <th class="py-2 px-4 border" style="width: 327px;">Адрес</th>
                                 <th class="py-2 px-4 border" style="width: 258px;"></th>
                                 <!-- Пустая ячейка для кнопок -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="hover:bg-gray-100" v-for="(company, index) in companies" :key="company.id">
-                                <td class="py-2 px-4 border">{{ company.name }}</td>
-                                <td class="py-2 px-4 border">{{ company.email }}</td>
-                                <td class="py-2 px-4 border">{{ company.logo }}</td>
-                                <td class="py-2 px-4 border">{{ company.address }}</td>
-                                <td class="py-2 px-4 border" style="width: 258px;">
+                                <td class="py-2 px-4 border w-206"> <p class="truncate">{{ company.name }}</p></td>
+                                <td class="py-2 px-4 border w-317 truncate"> <p class="truncate">{{ company.email }}</p></td>
+                                <td class="py-2 px-4 border w-106 truncate"> <p class="truncate">{{ company.logo }}</p></td>
+                                <td class="py-2 px-4 border w-327"> <p class="truncate">{{ company.address }}</p></td>
+                                <td class="py-2 px-4 border w-258">
                                     <button class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">
                                         <a :href="route('company.edit', company.id)">
                                             Редактировать
