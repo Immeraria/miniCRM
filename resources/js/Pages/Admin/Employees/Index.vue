@@ -25,7 +25,7 @@ import axios from 'axios';
               <th class="py-2 px-4 border">Компания</th>
               <th class="py-2 px-4 border">Почта</th>
               <th class="py-2 px-4 border">Телефон</th>
-              <th class="py-2 px-4 border"></th>
+              <th class="py-2 px-4 border" style="width: 258px;"></th>
               <!-- Пустая ячейка для кнопок -->
             </tr>
             </thead>
@@ -36,7 +36,7 @@ import axios from 'axios';
               <td class="py-2 px-4 border">{{ employee.company.name }}</td>
               <td class="py-2 px-4 border">{{ employee.email }}</td>
               <td class="py-2 px-4 border">{{ employee.phone_num }}</td>
-              <td class="py-2 px-4 border">
+              <td class="py-2 px-4 border" style="width: 258px;">
                 <button class="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-800">
                   <a :href="route('employee.edit', employee.id)">
                     Редактировать
